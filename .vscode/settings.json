@@ -1,0 +1,40 @@
+{
+    // ターミナルで実行
+    "code-runner.runInTerminal": true,
+    // docker containerを起動してコンパイル & 実行
+    "code-runner.executorMap": {
+        // localのターミナルを使う場合はこちら
+        //"c": "cd $workspaceRoot && docker run --rm -v $dir:/app pman0214/alpine-gcc sh -c \"gcc -Wall -o $fileNameWithoutExt $fileName && ./$fileNameWithoutExt\"",
+        // docker上のshellを使う場合はこちら: $dirが相対パスでないので、頑張って変換する
+        "c": "target=$dir; target=${target#$workspaceRoot/} && if [ ! -z \"${target}\" ]; then wd=$(pwd); cd ${target}; fi && gcc -Wall -o $fileNameWithoutExt $fileName && ./$fileNameWithoutExt && if [ ! -z \"${target}\" ]; then cd ${wd}; fi",
+    },
+    "terminal.integrated.profiles.osx": {
+        "zsh": {
+            "path": "zsh",
+            "icon": "terminal"
+        },
+        "bash": {
+            "path": "bash",
+            "icon": "terminal"
+        },
+        "docker-shell": {
+            "path": ".vscode/docker-ash.sh",
+            "icon": "terminal-linux"
+        }
+    },
+    "terminal.integrated.defaultProfile.osx": "docker-shell",
+    "terminal.integrated.profiles.windows": {
+        "cmd": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "icon": "terminal-cmd",
+        },
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "cmd"
+}
