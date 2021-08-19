@@ -6,7 +6,7 @@
         // localのターミナルを使う場合はこちら
         //"c": "cd $workspaceRoot && docker run --rm -v $dir:/app pman0214/alpine-gcc sh -c \"gcc -Wall -o $fileNameWithoutExt $fileName && ./$fileNameWithoutExt\"",
         // docker上のshellを使う場合はこちら: $dirが相対パスでないので、頑張って変換する
-        "c": "target=$dir; target=${target#$workspaceRoot/} && if [ ! -z \"${target}\" ]; then wd=$(pwd); cd ${target}; fi && gcc -Wall -o $fileNameWithoutExt $fileName && ./$fileNameWithoutExt && if [ ! -z \"${target}\" ]; then cd ${wd}; fi",
+        "c": "target=$dir; target=${target#$workspaceRoot/} && cd /app/${target} && gcc -Wall -o $fileNameWithoutExt $fileName && ./$fileNameWithoutExt",
     },
     "terminal.integrated.profiles.osx": {
         "zsh": {
